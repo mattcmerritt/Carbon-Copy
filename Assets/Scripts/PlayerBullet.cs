@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerBullet : MonoBehaviour
 {
     private Vector2 Direction;
-    private float Speed = 10f;
+    private float Speed;
+    private float Damage;
 
     private Rigidbody2D rb;
 
@@ -36,5 +37,11 @@ public class PlayerBullet : MonoBehaviour
         {
             // deal damage
         }
+    }
+
+    public void SetStats(float damage, float speed)
+    {
+        Speed = speed;
+        Damage = damage;
     }
 }

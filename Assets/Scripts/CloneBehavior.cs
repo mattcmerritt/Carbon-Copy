@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class CloneBehavior : MonoBehaviour
 {
-    public GameObject Bullet;
+    public Weapon CurrentWeapon;
+
+    private void Awake()
+    {
+        CurrentWeapon.SetClone(gameObject);
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            Instantiate(Bullet, transform.position, Quaternion.identity);
+            if (CurrentWeapon.CanShoot())
+            {
+                CurrentWeapon.FireShot();
+            }
         }
     }
 }
