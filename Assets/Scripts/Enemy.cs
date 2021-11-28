@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,11 +9,24 @@ public class Enemy : MonoBehaviour
     protected GameObject Target;
     [SerializeField]
     protected float Health = 100f;
+    private float MaxHealth;
     protected float Damage;
+
+    // health bar
+    public Image HealthBar;
+    private RectTransform BarTransform;
+    private float BeginAnchor, EndAnchor, CurrentAnchor;
 
     protected virtual void Awake()
     {
         Clones = FindObjectOfType<CloneManager>();
+
+        BarTransform = HealthBar.GetComponent<RectTransform>();
+        BeginAnchor = BarTransform.anchorMin.x;
+        EndAnchor = BarTransform.anchorMax.x;
+        CurrentAnchor = EndAnchor;
+
+        MaxHealth = Health;
     }
 
     protected virtual void Update()
@@ -44,6 +58,10 @@ public class Enemy : MonoBehaviour
             PlayerBullet bullet = collision.GetComponent<PlayerBullet>();
 
             Health -= bullet.GetDamage();
+
+            CurrentAnchor = (EndAnchor - BeginAnchor) * (Health / MaxHealth) + BeginAnchor;
+            BarTransform.anchorMax = new Vector2(CurrentAnchor, BarTransform.anchorMax.y);
+
             if (Health <= 0f)
             {
                 Destroy(gameObject);
