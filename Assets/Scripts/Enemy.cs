@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    protected List<GameObject> Clones;
+    protected CloneManager Clones;
     protected GameObject Target;
     protected float Health;
     protected float Damage;
 
     protected virtual void Awake()
     {
-        GameObject[] clones = GameObject.FindGameObjectsWithTag("Player");
-        Clones = new List<GameObject>(clones);
+        Clones = FindObjectOfType<CloneManager>();
     }
 
     protected virtual void Update()
@@ -24,13 +23,13 @@ public class Enemy : MonoBehaviour
     {
         float minDistance = float.MaxValue;
         GameObject selectedClone = null;
-        for (int i = 0; i < Clones.Count; i++)
+        for (int i = 0; i < Clones.GetClones().Count; i++)
         {
-            float currentDistance = Vector3.Distance(Clones[i].transform.position, transform.position);
+            float currentDistance = Vector3.Distance(Clones.GetClones()[i].transform.position, transform.position);
             if (currentDistance < minDistance)
             {
                 minDistance = currentDistance;
-                selectedClone = Clones[i];
+                selectedClone = Clones.GetClones()[i];
             }
         }
 

@@ -49,4 +49,9 @@ public class EnemyBullet : MonoBehaviour
         Speed = speed;
         Damage = damage;
     }
+
+    public float GetDamage()
+    {
+        return Damage;
+    }
 }

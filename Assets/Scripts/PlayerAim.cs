@@ -9,19 +9,11 @@ public class PlayerAim : MonoBehaviour
     private float Angle;
 
     private int Selected;
-    public List<Rigidbody2D> Clones;
+    public CloneManager Clones;
 
     private void Start()
     {
-        Clones = new List<Rigidbody2D>();
-        Rigidbody2D[] rbs = FindObjectsOfType<Rigidbody2D>();
-        foreach (Rigidbody2D rb in rbs)
-        {
-            if (rb.tag == "Player")
-            {
-                Clones.Add(rb);
-            }
-        }
+        Clones = FindObjectOfType<CloneManager>();
 
         MousePosition = Vector2.zero;
         MouseDirection = Vector2.zero;
@@ -30,14 +22,18 @@ public class PlayerAim : MonoBehaviour
     private void Update()
     {
         MousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        MouseDirection = (MousePosition - Clones[Selected].position).normalized;
 
-        Angle = -Mathf.Atan2(MousePosition.x - Clones[Selected].position.x, MousePosition.y - Clones[Selected].position.y) * Mathf.Rad2Deg + 90;
-
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Clones.GetClones().Count != 0)
         {
-            Selected++;
-            Selected = Selected % Clones.Count;
+            MouseDirection = (MousePosition - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position).normalized;
+
+            Angle = -Mathf.Atan2(MousePosition.x - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position.x, MousePosition.y - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position.y) * Mathf.Rad2Deg + 90;
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                Selected++;
+                Selected = Selected % Clones.GetClones().Count;
+            }
         }
     }
 

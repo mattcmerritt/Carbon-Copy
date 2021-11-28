@@ -34,43 +34,47 @@ public class Turret : Enemy
         // basic enemy behavior first
         base.Update();
 
-        // find angle to target
-        Angle = (360 - Mathf.Atan2(transform.position.x - Target.transform.position.x, transform.position.y - Target.transform.position.y) * Mathf.Rad2Deg - 90) % 360;
-
-        // choosing the correctly angled sprite
-        if (Angle <= AngleBorders[0] || Angle > AngleBorders[AngleBorders.Length -1])
+        // turret behavior, only if a target can be found
+        if (Target != null)
         {
-            Renderer.sprite = TurretSprites[0];
-        }
-        for (int i = 1; i < AngleBorders.Length; i++)
-        {
-            float maxBound = AngleBorders[i];
-            float minBound = AngleBorders[i - 1];
+            // find angle to target
+            Angle = (360 - Mathf.Atan2(transform.position.x - Target.transform.position.x, transform.position.y - Target.transform.position.y) * Mathf.Rad2Deg - 90) % 360;
 
-            if (Angle > minBound && Angle <= maxBound)
+            // choosing the correctly angled sprite
+            if (Angle <= AngleBorders[0] || Angle > AngleBorders[AngleBorders.Length - 1])
             {
-                Renderer.sprite = TurretSprites[i];
+                Renderer.sprite = TurretSprites[0];
             }
-        }
+            for (int i = 1; i < AngleBorders.Length; i++)
+            {
+                float maxBound = AngleBorders[i];
+                float minBound = AngleBorders[i - 1];
 
-        // calculate the shot direction
-        ShotDirection = new Vector2(Target.transform.position.x - transform.position.x, Target.transform.position.y - transform.position.y);
-        ShotDirection.Normalize();
+                if (Angle > minBound && Angle <= maxBound)
+                {
+                    Renderer.sprite = TurretSprites[i];
+                }
+            }
 
-        // weapon cooldown updates
-        if (CooldownActive)
-        {
-            CurrentDelay += Time.deltaTime;
-        }
-        if (CurrentDelay > FireDelay)
-        {
-            CooldownActive = false;
-        }
+            // calculate the shot direction
+            ShotDirection = new Vector2(Target.transform.position.x - transform.position.x, Target.transform.position.y - transform.position.y);
+            ShotDirection.Normalize();
 
-        // shooting
-        if (CanShoot())
-        {
-            FireShot();
+            // weapon cooldown updates
+            if (CooldownActive)
+            {
+                CurrentDelay += Time.deltaTime;
+            }
+            if (CurrentDelay > FireDelay)
+            {
+                CooldownActive = false;
+            }
+
+            // shooting
+            if (CanShoot())
+            {
+                FireShot();
+            }
         }
     }
 
