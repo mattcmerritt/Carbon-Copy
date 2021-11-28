@@ -35,7 +35,7 @@ public class PlayerBullet : MonoBehaviour
         }
         else if (collision.tag == "Enemy")
         {
-            // deal damage
+            Destroy(gameObject);
         }
     }
 

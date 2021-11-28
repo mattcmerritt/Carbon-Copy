@@ -9,11 +9,13 @@ public class PlayerAim : MonoBehaviour
     private float Angle;
 
     private int Selected;
+    private GameObject SelectedClone;
     public CloneManager Clones;
 
     private void Start()
     {
         Clones = FindObjectOfType<CloneManager>();
+        SelectedClone = Clones.GetClones()[Selected];
 
         MousePosition = Vector2.zero;
         MouseDirection = Vector2.zero;
@@ -25,6 +27,17 @@ public class PlayerAim : MonoBehaviour
 
         if (Clones.GetClones().Count != 0)
         {
+            // check that the selected clone hasn't changed
+            if (SelectedClone != Clones.GetClones()[Selected])
+            {
+                Selected = Clones.GetClones().FindIndex(MatchesSelected);
+                // selected clone is no longer present, select first
+                if (Selected < 0)
+                {
+                    Selected = 0;
+                }
+            }
+
             MouseDirection = (MousePosition - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position).normalized;
 
             Angle = -Mathf.Atan2(MousePosition.x - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position.x, MousePosition.y - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position.y) * Mathf.Rad2Deg + 90;
@@ -45,5 +58,10 @@ public class PlayerAim : MonoBehaviour
     public float GetAngle()
     {
         return Angle;
+    }
+
+    private bool MatchesSelected(GameObject obj)
+    {
+        return obj == SelectedClone;
     }
 }
