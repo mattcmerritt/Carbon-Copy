@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Walls
   - Weapon
+  - Unfriendly
   layers:
   - Default
   - TransparentFX
