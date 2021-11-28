@@ -27,8 +27,15 @@ public class PlayerAim : MonoBehaviour
 
         if (Clones.GetClones().Count != 0)
         {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Selected++;
+                Selected = Selected % Clones.GetClones().Count;
+                SelectedClone = Clones.GetClones()[Selected];
+            }
+
             // check that the selected clone hasn't changed
-            if (SelectedClone != Clones.GetClones()[Selected])
+            if (Selected > Clones.GetClones().Count || SelectedClone != Clones.GetClones()[Selected])
             {
                 Selected = Clones.GetClones().FindIndex(MatchesSelected);
                 // selected clone is no longer present, select first
@@ -41,12 +48,6 @@ public class PlayerAim : MonoBehaviour
             MouseDirection = (MousePosition - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position).normalized;
 
             Angle = -Mathf.Atan2(MousePosition.x - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position.x, MousePosition.y - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position.y) * Mathf.Rad2Deg + 90;
-
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                Selected++;
-                Selected = Selected % Clones.GetClones().Count;
-            }
         }
     }
 

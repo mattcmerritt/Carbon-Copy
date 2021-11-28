@@ -28,10 +28,6 @@ public class EnemyBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else if (collision.tag == "Player")
-        {
-            Destroy(gameObject);
-        }
     }
 
     public void SetProperties(float angle, Vector2 direction)

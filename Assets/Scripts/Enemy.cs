@@ -6,7 +6,8 @@ public class Enemy : MonoBehaviour
 {
     protected CloneManager Clones;
     protected GameObject Target;
-    protected float Health;
+    [SerializeField]
+    protected float Health = 100f;
     protected float Damage;
 
     protected virtual void Awake()
@@ -36,12 +37,19 @@ public class Enemy : MonoBehaviour
         return selectedClone;
     }
 
-    public void TakeDamage(float damage)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Health -= Damage;
-        if (Health <= 0f)
+        if (collision.tag == "Friendly")
         {
-            Destroy(gameObject);
+            PlayerBullet bullet = collision.GetComponent<PlayerBullet>();
+
+            Health -= bullet.GetDamage();
+            if (Health <= 0f)
+            {
+                Destroy(gameObject);
+            }
+
+            Destroy(collision.gameObject);
         }
     }
 }

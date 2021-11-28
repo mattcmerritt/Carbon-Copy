@@ -38,6 +38,7 @@ public class CloneBehavior : MonoBehaviour
         {
             EnemyBullet bullet = collision.GetComponent<EnemyBullet>();
             Health -= bullet.GetDamage();
+            Destroy(collision.gameObject);
 
             if (Health <= 0f)
             {
