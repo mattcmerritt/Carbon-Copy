@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class CloneBehavior : MonoBehaviour
 {
-    public Weapon CurrentWeapon;
-
-    private void Awake()
-    {
-        CurrentWeapon.SetClone(gameObject);
-    }
+    private Weapon CurrentWeapon;
 
     private void Update()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            if (CurrentWeapon.CanShoot())
+            if (CurrentWeapon != null)
             {
-                CurrentWeapon.FireShot();
-            }
+                if (CurrentWeapon.CanShoot())
+                {
+                    CurrentWeapon.FireShot();
+                }
+            }    
+        }
+    }
+
+   public void Collect(GameObject collectible)
+    {
+        Weapon weapon = collectible.GetComponent<Weapon>();
+
+        if (weapon != null)
+        {
+            weapon.SetClone(gameObject);
+            CurrentWeapon = weapon;
         }
     }
 }
