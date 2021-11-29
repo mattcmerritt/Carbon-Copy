@@ -12,6 +12,9 @@ public class PlayerAim : MonoBehaviour
     private GameObject SelectedClone;
     public CloneManager Clones;
 
+    // selection circle
+    private SpriteRenderer SelectionCircle;
+
     private void Start()
     {
         Clones = FindObjectOfType<CloneManager>();
@@ -19,6 +22,8 @@ public class PlayerAim : MonoBehaviour
 
         MousePosition = Vector2.zero;
         MouseDirection = Vector2.zero;
+
+        SelectionCircle = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -35,19 +40,31 @@ public class PlayerAim : MonoBehaviour
             }
 
             // check that the selected clone hasn't changed
-            if (Selected > Clones.GetClones().Count || SelectedClone != Clones.GetClones()[Selected])
+            if (Selected >= Clones.GetClones().Count || SelectedClone != Clones.GetClones()[Selected])
             {
                 Selected = Clones.GetClones().FindIndex(MatchesSelected);
                 // selected clone is no longer present, select first
                 if (Selected < 0)
                 {
                     Selected = 0;
+                    SelectedClone = Clones.GetClones()[Selected];
                 }
             }
 
             MouseDirection = (MousePosition - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position).normalized;
 
             Angle = -Mathf.Atan2(MousePosition.x - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position.x, MousePosition.y - Clones.GetClones()[Selected].GetComponent<Rigidbody2D>().position.y) * Mathf.Rad2Deg + 90;
+        }
+        else
+        {
+            SelectedClone = null;
+            SelectionCircle.enabled = false;
+        }
+
+        // drawing the selection circle
+        if (SelectedClone != null)
+        {
+            transform.position = SelectedClone.transform.position + Vector3.down * 0.5f;
         }
     }
 

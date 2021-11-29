@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CloneManager : MonoBehaviour
 {
+    [SerializeField]
     private List<GameObject> Clones;
 
     private void Start()
