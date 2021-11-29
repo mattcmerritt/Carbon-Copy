@@ -6,6 +6,14 @@ public class CloneBehavior : MonoBehaviour
 {
     private Weapon CurrentWeapon;
     private float Health = 100f;
+    private float MaxHealth;
+
+    public int CloneIndex;
+
+    private void Awake()
+    {
+        MaxHealth = Health;
+    }
 
     private void Update()
     {
@@ -25,8 +33,14 @@ public class CloneBehavior : MonoBehaviour
    {
         Weapon weapon = collectible.GetComponent<Weapon>();
 
-        if (weapon != null)
+        if (weapon != null && CurrentWeapon == null)
         {
+            weapon.SetClone(gameObject);
+            CurrentWeapon = weapon;
+        }
+        else if (weapon != null && CurrentWeapon != null)
+        {
+            CurrentWeapon.Drop();
             weapon.SetClone(gameObject);
             CurrentWeapon = weapon;
         }
@@ -44,9 +58,22 @@ public class CloneBehavior : MonoBehaviour
             {
                 // Player has died
                 CloneManager manager = FindObjectOfType<CloneManager>();
+
+                // drop weapon
+                if (CurrentWeapon != null)
+                {
+                    CurrentWeapon.Drop();
+                    CurrentWeapon = null;
+                }
+
                 manager.RemoveClone(gameObject);
                 Destroy(gameObject);
             }
         }
+    }
+
+    public float GetHealthPercent()
+    {
+        return Health / MaxHealth;
     }
 }

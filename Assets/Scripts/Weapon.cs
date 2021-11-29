@@ -10,7 +10,9 @@ public class Weapon : MonoBehaviour
     private float CurrentAmmo;
     private float ShotSpeed = 10f;
 
+    [SerializeField]
     private bool CooldownActive;
+    [SerializeField]
     private float CurrentDelay;
 
     private GameObject Holder;
@@ -54,5 +56,16 @@ public class Weapon : MonoBehaviour
     public void SetClone(GameObject clone)
     {
         Holder = clone;
+    }
+
+    public void Drop()
+    {
+        transform.SetParent(null);
+        Collider2D collider = GetComponent<Collider2D>();
+        collider.enabled = true;
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        renderer.enabled = true;
+        Collectible collectible = GetComponent<Collectible>();
+        collectible.enabled = true;
     }
 }
