@@ -15,11 +15,10 @@ public class PlayerAim : MonoBehaviour
     // selection circle
     private SpriteRenderer SelectionCircle;
 
-    private void Start()
+    private void Awake()
     {
         Clones = FindObjectOfType<CloneManager>();
-        SelectedClone = Clones.GetClones()[Selected];
-
+        
         MousePosition = Vector2.zero;
         MouseDirection = Vector2.zero;
 
