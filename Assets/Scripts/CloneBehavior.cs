@@ -6,6 +6,14 @@ public class CloneBehavior : MonoBehaviour
 {
     private Weapon CurrentWeapon;
     private float Health = 100f;
+    private float MaxHealth;
+
+    public int CloneIndex;
+
+    private void Awake()
+    {
+        MaxHealth = Health;
+    }
 
     private void Update()
     {
@@ -48,5 +56,10 @@ public class CloneBehavior : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    public float GetHealthPercent()
+    {
+        return Health / MaxHealth;
     }
 }
