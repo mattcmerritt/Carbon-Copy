@@ -70,6 +70,35 @@ public class CloneBehavior : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        if (collision.tag == "Exits")
+        {
+            RoomManager roomManager = FindObjectOfType<RoomManager>();
+            // used one of the side exits
+            if (Mathf.Abs(transform.position.x) > Mathf.Abs(transform.position.y))
+            {
+                if (transform.position.x > 0)
+                {
+                    roomManager.MoveRoom(RoomManager.RIGHT);
+                }
+                else
+                {
+                    roomManager.MoveRoom(RoomManager.LEFT);
+                }
+            }
+            // used the top or bottom exit
+            else
+            {
+                if (transform.position.y > 0)
+                {
+                    roomManager.MoveRoom(RoomManager.UP);
+                }
+                else
+                {
+                    roomManager.MoveRoom(RoomManager.DOWN);
+                }
+            }
+        }
     }
 
     public float GetHealthPercent()

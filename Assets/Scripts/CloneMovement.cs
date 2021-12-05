@@ -9,6 +9,10 @@ public class CloneMovement : MonoBehaviour
     public float MoveSpeed;
     private Animator anim;
 
+    // variables for initially loading rooms
+    private bool IsLoadingRoom;
+    private Vector2 LoadedPosition;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,6 +33,20 @@ public class CloneMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + InputDirection * MoveSpeed * Time.fixedDeltaTime);
+        if (!IsLoadingRoom)
+        {
+            rb.MovePosition(rb.position + InputDirection * MoveSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            rb.MovePosition(LoadedPosition);
+            IsLoadingRoom = false;
+        }
+    }
+
+    public void MoveToPosition(Vector2 position)
+    {
+        LoadedPosition = position;
+        IsLoadingRoom = true;
     }
 }
