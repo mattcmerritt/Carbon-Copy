@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     private RectTransform BarTransform;
     private float BeginAnchor, EndAnchor, CurrentAnchor;
 
+    private bool NeedsRemoval = false;
+
     protected virtual void Awake()
     {
         Clones = FindObjectOfType<CloneManager>();
@@ -64,10 +66,15 @@ public class Enemy : MonoBehaviour
 
             if (Health <= 0f)
             {
-                Destroy(gameObject);
+                NeedsRemoval = true;
             }
 
             Destroy(collision.gameObject);
         }
+    }
+
+    public bool ShouldBeRemoved()
+    {
+        return NeedsRemoval;
     }
 }

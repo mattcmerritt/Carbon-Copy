@@ -9,6 +9,7 @@ TagManager:
   - Walls
   - Weapon
   - Unfriendly
+  - Exits
   layers:
   - Default
   - TransparentFX

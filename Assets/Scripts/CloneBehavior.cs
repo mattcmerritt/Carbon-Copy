@@ -10,6 +10,8 @@ public class CloneBehavior : MonoBehaviour
 
     public int CloneIndex;
 
+    private float WeaponSwapCooldown;
+
     private void Awake()
     {
         MaxHealth = Health;
@@ -27,6 +29,7 @@ public class CloneBehavior : MonoBehaviour
                 }
             }    
         }
+        WeaponSwapCooldown += Time.deltaTime;
     }
 
    public void Collect(GameObject collectible)
@@ -44,6 +47,9 @@ public class CloneBehavior : MonoBehaviour
             weapon.SetClone(gameObject);
             CurrentWeapon = weapon;
         }
+
+        // reset weapon cooldown
+        WeaponSwapCooldown = 0f;
    }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -70,10 +76,49 @@ public class CloneBehavior : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        if (collision.tag == "Exits")
+        {
+            RoomManager roomManager = FindObjectOfType<RoomManager>();
+            // used one of the side exits
+            if (Mathf.Abs(transform.position.x) > Mathf.Abs(transform.position.y))
+            {
+                if (transform.position.x > 0)
+                {
+                    roomManager.MoveRoom(RoomManager.RIGHT);
+                }
+                else
+                {
+                    roomManager.MoveRoom(RoomManager.LEFT);
+                }
+            }
+            // used the top or bottom exit
+            else
+            {
+                if (transform.position.y > 0)
+                {
+                    roomManager.MoveRoom(RoomManager.UP);
+                }
+                else
+                {
+                    roomManager.MoveRoom(RoomManager.DOWN);
+                }
+            }
+        }
     }
 
     public float GetHealthPercent()
     {
         return Health / MaxHealth;
+    }
+
+    public bool HasWeapon()
+    {
+        return CurrentWeapon != null;
+    }
+
+    public bool CanGrabWeapon()
+    {
+        return WeaponSwapCooldown > 0.5f;
     }
 }
