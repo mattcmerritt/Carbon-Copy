@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public GameObject RoomToLoad;
     private Room LoadedRoom;
 
     private CloneManager Clones;
@@ -14,16 +13,19 @@ public class RoomManager : MonoBehaviour
     public GameObject[][] RoomTemplates;
     public GameObject[][] RoomObjects;
 
-    public GameObject Room1, Room2;
+    public GameObject StartRoom, Room1, Room2;
 
     public int CurrentRoomX, CurrentRoomY;
     public int PreviousDirection;
+
+    private bool LoadingRoom;
 
     private void Awake()
     {
         Clones = FindObjectOfType<CloneManager>();
 
-        RoomTemplates = new GameObject[][] { new GameObject[] {Room1, Room2}, new GameObject[] {Room1, Room2} };
+        // array is currently upside-down
+        RoomTemplates = new GameObject[][] { new GameObject[] {StartRoom, Room1}, new GameObject[] {Room2, Room1} };
         RoomObjects = new GameObject[RoomTemplates.Length][];
         
         for (int row = 0; row < RoomObjects.Length; row++)
@@ -33,22 +35,8 @@ public class RoomManager : MonoBehaviour
 
         InitialRoomLoad();
 
-        RoomToLoad = RoomTemplates[CurrentRoomY][CurrentRoomX];
-
         LoadCurrentRoom();
     }
-
-    /*
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            LoadedRoom.UnloadLevel();
-            Destroy(LoadedRoom.gameObject);
-            Load();
-        }
-    }
-    */
 
     private void InitialRoomLoad()
     {
@@ -60,67 +48,80 @@ public class RoomManager : MonoBehaviour
                 Room room = RoomObjects[y][x].GetComponent<Room>();
                 room.InitialLoadLevel();
                 room.UnloadLevel();
+                room.gameObject.SetActive(false);
             }
         }
     }
 
     private void LoadCurrentRoom()
     {
-        /*
-        GameObject room = Instantiate(RoomToLoad, Vector3.zero, Quaternion.identity);
-        LoadedRoom = room.GetComponent<Room>();
-        LoadedRoom.LoadLevel(Clones.GetClones().ToArray(), PreviousDirection);
-        */
-
-        GameObject room = RoomObjects[CurrentRoomY][CurrentRoomY];
+        GameObject room = RoomObjects[CurrentRoomY][CurrentRoomX];
         room.SetActive(true);
         LoadedRoom = room.GetComponent<Room>();
         LoadedRoom.LoadLevel(Clones.GetClones().ToArray(), PreviousDirection);
+
+        LoadingRoom = false;
+    }
+
+    private void UnloadPrevious(int x, int y)
+    {
+        GameObject prev = RoomObjects[y][x];
+        Room prevRoom = prev.GetComponent<Room>();
+        prevRoom.UnloadLevel();
+        prev.SetActive(false);
     }
 
     public void MoveRoom(int direction)
     {
-        int prevX = CurrentRoomX, prevY = CurrentRoomY;
+        Debug.Log("Loading " + LoadingRoom);
+        if (!LoadingRoom)
+        {
+            int prevX = CurrentRoomX, prevY = CurrentRoomY;
 
-        if (direction == DOWN)
-        {
-            CurrentRoomY--;
-            PreviousDirection = UP;
-        }
-        else if (direction == UP)
-        {
-            CurrentRoomY++;
-            PreviousDirection = DOWN;
-        }
-        else if (direction == LEFT)
-        {
-            CurrentRoomY--;
-            PreviousDirection = RIGHT;
-        }
-        else if (direction == RIGHT)
-        {
-            CurrentRoomY++;
-            PreviousDirection = LEFT;
-        }
+            Debug.Log(direction);
+            if (direction == DOWN)
+            {
+                CurrentRoomY--;
+                PreviousDirection = UP;
+            }
+            else if (direction == UP)
+            {
+                CurrentRoomY++;
+                PreviousDirection = DOWN;
+            }
+            else if (direction == LEFT)
+            {
+                CurrentRoomX--;
+                PreviousDirection = RIGHT;
+            }
+            else if (direction == RIGHT)
+            {
+                CurrentRoomX++;
+                PreviousDirection = LEFT;
+            }
 
-        // check bounds
-        if (CurrentRoomY >= RoomObjects.Length || CurrentRoomY < 0)
-        {
-            CurrentRoomY = prevY;
-            Debug.LogError("Escaped Vertical Bounds");
-        }
-        else if (CurrentRoomX >= RoomObjects[CurrentRoomY].Length || CurrentRoomX < 0)
-        {
-            CurrentRoomX = prevX;
-            Debug.LogError("Escaped Horizontal Bounds");
-        }
-        // if in bounds, move was allowed and new room needs to load
-        else
-        {
-            Room prev = RoomToLoad.GetComponent<Room>();
-            prev.UnloadLevel();
-            RoomToLoad = RoomObjects[CurrentRoomY][CurrentRoomX];
-            LoadCurrentRoom();
+            // check bounds
+            Debug.Log("X: " + CurrentRoomX + " Y: " + CurrentRoomY);
+            if (CurrentRoomY >= RoomObjects.Length || CurrentRoomY < 0)
+            {
+                CurrentRoomY = prevY;
+                Debug.LogError("Escaped Vertical Bounds");
+            }
+            else if (CurrentRoomX >= RoomObjects[CurrentRoomY].Length || CurrentRoomX < 0)
+            {
+                CurrentRoomX = prevX;
+                Debug.LogError("Escaped Horizontal Bounds");
+            }
+            // if in bounds, move was allowed and new room needs to load
+            else
+            {
+                // unload previous
+                UnloadPrevious(prevX, prevY);
+
+                // load current
+                LoadingRoom = true;
+                LoadCurrentRoom();
+            }
         }
     }
 }

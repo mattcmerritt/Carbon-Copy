@@ -91,16 +91,27 @@ public class Room : MonoBehaviour
         // removing enemies
         for (int i = 0; i < LoadedEnemies.Length; i++)
         {
-            LoadedEnemies[i].SetActive(false);
+            if (LoadedEnemies[i] != null)
+            {
+                LoadedEnemies[i].SetActive(false);
+            }
         }
 
         // removing collectibles
         for (int i = 0; i < LoadedCollectibles.Length; i++)
         {
-            LoadedCollectibles[i].SetActive(false);
+            if (LoadedCollectibles[i] != null)
+            {
+                // if not held by player, remove weapon
+                if (LoadedCollectibles[i].transform.parent == null)
+                {
+                    LoadedCollectibles[i].SetActive(false);
+                }
+            }
+            
         }
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     private void Update()
