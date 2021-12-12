@@ -16,7 +16,7 @@ public class Room : MonoBehaviour
     public List<GameObject> Collectibles;
     public List<Vector3> CollectiblePositions;
     public List<GameObject> LoadedCollectibles;
-    public GameObject PistolPrefab, RiflePrefab;
+    public GameObject PistolPrefab, RiflePrefab, HealthPickupPrefab;
 
     // clone spawn locations
     public List<Vector2> Spawns; // first 4 are bottom, then top, left, right
@@ -28,6 +28,10 @@ public class Room : MonoBehaviour
     // room manager
     private RoomManager RM;
     private bool NeedsUpdate = false;
+
+    // camera controls
+    public bool IsLarge;
+    public float CameraBoundRight, CameraBoundBottom, CameraBoundLeft, CameraBoundTop;
 
     private void Awake()
     {
@@ -62,6 +66,10 @@ public class Room : MonoBehaviour
             else if (Collectibles[i] == RiflePrefab)
             {
                 item = Instantiate(RiflePrefab, CollectiblePositions[i], Quaternion.identity);
+            }
+            else if (Collectibles[i] == HealthPickupPrefab)
+            {
+                item = Instantiate(HealthPickupPrefab, CollectiblePositions[i], Quaternion.identity);
             }
             LoadedCollectibles.Add(item);
         }

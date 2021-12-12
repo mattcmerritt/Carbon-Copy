@@ -132,4 +132,9 @@ public class CloneBehavior : MonoBehaviour
     {
         return CurrentWeapon;
     }
+
+    public void AddHealth(int added)
+    {
+        Health += added;
+    }
 }

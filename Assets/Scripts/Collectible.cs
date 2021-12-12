@@ -13,6 +13,7 @@ public class Collectible : MonoBehaviour
             if (collision.tag == "Player")
             {
                 Weapon weapon = GetComponent<Weapon>();
+                HealthPickup health = GetComponent<HealthPickup>();
 
                 if (weapon != null)
                 {
@@ -44,6 +45,12 @@ public class Collectible : MonoBehaviour
 
                         isCollected = true;
                     }
+                }
+                else if (health != null)
+                {
+                    health.Collect();
+                    health.RemoveFromRoom();
+                    Destroy(gameObject);
                 }
             }
         }

@@ -1401,6 +1401,7 @@ MonoBehaviour:
   LoadedCollectibles: []
   PistolPrefab: {fileID: 2251070642498628064, guid: f72be64c439013c4d92607374c95c296, type: 3}
   RiflePrefab: {fileID: 7104603735817910632, guid: a093da7d510439748a9432f599a0c92f, type: 3}
+  HealthPickupPrefab: {fileID: 966917716782316586, guid: 424badfc17e75434d8795767cd9d116f, type: 3}
   Spawns:
   - {x: -1.5, y: -3}
   - {x: -0.5, y: -3}
@@ -1421,6 +1422,11 @@ MonoBehaviour:
   Doors: {fileID: 1395119124288814864}
   ClosedDoor: {fileID: 11400000, guid: 996c15bdf7755024d915a3b2347c8f2e, type: 2}
   OpenDoor: {fileID: 11400000, guid: bc3f09a0abcfb9d4e981d488dacc51a0, type: 2}
+  IsLarge: 0
+  CameraBoundRight: 0
+  CameraBoundBottom: 0
+  CameraBoundLeft: 0
+  CameraBoundTop: 0
 --- !u!1 &1046810903473636174
 GameObject:
   m_ObjectHideFlags: 0
