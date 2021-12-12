@@ -77,12 +77,12 @@ public class RoomManager : MonoBehaviour
 
     public void MoveRoom(int direction)
     {
-        Debug.Log("Loading " + LoadingRoom);
+        //Debug.Log("Loading " + LoadingRoom);
         if (!LoadingRoom)
         {
             int prevX = CurrentRoomX, prevY = CurrentRoomY;
 
-            Debug.Log(direction);
+            //Debug.Log(direction);
             if (direction == DOWN)
             {
                 CurrentRoomY--;
@@ -105,7 +105,7 @@ public class RoomManager : MonoBehaviour
             }
 
             // check bounds
-            Debug.Log("X: " + CurrentRoomX + " Y: " + CurrentRoomY);
+            //Debug.Log("X: " + CurrentRoomX + " Y: " + CurrentRoomY);
             if (CurrentRoomY >= RoomObjects.Length || CurrentRoomY < 0)
             {
                 CurrentRoomY = prevY;

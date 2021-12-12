@@ -70,5 +70,8 @@ public class Weapon : MonoBehaviour
         Collectible collectible = GetComponent<Collectible>();
         collectible.enabled = true;
         collectible.CanCollectAgain();
+
+        Room currentRoom = FindObjectOfType<Room>();
+        currentRoom.AddDroppedCollectible(gameObject);
     }
 }
