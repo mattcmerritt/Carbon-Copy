@@ -2019,7 +2019,7 @@ MonoBehaviour:
   - {x: 6.5, y: 0.5}
   - {x: 6.5, y: -0.5}
   Doors: {fileID: 2842670345514152067}
-  ClosedDoor: {fileID: 11400000, guid: f13606651bff3d94ba6e9378471e9e18, type: 2}
+  ClosedDoor: {fileID: 11400000, guid: 996c15bdf7755024d915a3b2347c8f2e, type: 2}
   OpenDoor: {fileID: 11400000, guid: bc3f09a0abcfb9d4e981d488dacc51a0, type: 2}
 --- !u!1 &4226698713050090717
 GameObject:

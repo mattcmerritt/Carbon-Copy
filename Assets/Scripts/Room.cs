@@ -25,6 +25,15 @@ public class Room : MonoBehaviour
     public GameObject Doors;
     public TileBase ClosedDoor, OpenDoor;
 
+    // room manager
+    private RoomManager RM;
+    private bool NeedsUpdate = false;
+
+    private void Awake()
+    {
+        RM = FindObjectOfType<RoomManager>();
+    }
+
     public void InitialLoadLevel()
     {
         // loading enemies
@@ -84,6 +93,8 @@ public class Room : MonoBehaviour
             CloneMovement currentClone = clones[i].GetComponent<CloneMovement>();
             currentClone.MoveToPosition(Spawns[i + (direction * 4)]);
         }
+
+        NeedsUpdate = true;
     }
 
     public void UnloadLevel()
@@ -142,6 +153,15 @@ public class Room : MonoBehaviour
         if (NumEnemies == 0)
         {
             OpenDoors();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (NeedsUpdate)
+        {
+            RM.FinishLoading();
+            NeedsUpdate = false;
         }
     }
 

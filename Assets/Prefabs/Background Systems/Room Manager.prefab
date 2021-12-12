@@ -43,10 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9223a4e6cb2818e41b64e01a273171ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RoomToLoad: {fileID: 0}
-  StartRoom: {fileID: 633389046404218267, guid: f5d5f6749d5c38e4db8f6e28ce9b5ef9, type: 3}
-  Room1: {fileID: 4226698712083682953, guid: 58bf0c300583eeb42aefa8bcce66b7e1, type: 3}
-  Room2: {fileID: 4712368180622719042, guid: a98c21d489422e0478e049419f20adb9, type: 3}
-  CurrentRoomX: 0
+  RoomPrefabs:
+  - {fileID: 633389046404218267, guid: f5d5f6749d5c38e4db8f6e28ce9b5ef9, type: 3}
+  - {fileID: 4226698712083682953, guid: 58bf0c300583eeb42aefa8bcce66b7e1, type: 3}
+  - {fileID: 4712368180622719042, guid: a98c21d489422e0478e049419f20adb9, type: 3}
+  - {fileID: 3257669276577811990, guid: b34933a9d5aa741128a67545f6268d31, type: 3}
+  - {fileID: 1046810902544226586, guid: adaa6a86952564247bd03e292fff2dc6, type: 3}
+  - {fileID: 6867770582558595843, guid: 0511840e9fe0d44c48ae25f0b87c1387, type: 3}
+  - {fileID: 9178722873451990657, guid: 5c5576fc0a02f4dfc8cf2978cd579d76, type: 3}
+  - {fileID: 7445712379580490998, guid: 7b8c2c8e8b72e4dae9defd7ee6c7fe7e, type: 3}
+  - {fileID: 5745969091634953338, guid: 961451ee33e334e9c871ab7e325b0ca8, type: 3}
+  CurrentRoomX: 1
   CurrentRoomY: 0
   PreviousDirection: 0

@@ -18,6 +18,8 @@ public class Weapon : MonoBehaviour
     private GameObject Holder;
     public GameObject BulletPrefab;
 
+    private bool CanCollect;
+
     public void SetStats(float fireDelay, float shotDamage, float magSize)
     {
         FireDelay = fireDelay;
@@ -67,5 +69,6 @@ public class Weapon : MonoBehaviour
         renderer.enabled = true;
         Collectible collectible = GetComponent<Collectible>();
         collectible.enabled = true;
+        collectible.CanCollectAgain();
     }
 }

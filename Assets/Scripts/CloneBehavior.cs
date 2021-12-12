@@ -121,4 +121,9 @@ public class CloneBehavior : MonoBehaviour
     {
         return WeaponSwapCooldown > 0.5f;
     }
+
+    public Weapon GetWeapon()
+    {
+        return CurrentWeapon;
+    }
 }
