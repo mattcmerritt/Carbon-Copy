@@ -250,7 +250,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -4911900652228025539, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
+  m_Sprite: {fileID: 4069038346220086621, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -314,14 +314,14 @@ MonoBehaviour:
   HealthBar: {fileID: 46834804747758874}
   ShotDirection: {x: 0, y: 0}
   TurretSprites:
-  - {fileID: 3373600980103997389, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
-  - {fileID: 480131925130478923, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
-  - {fileID: -4770299539802532493, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
-  - {fileID: 6705409229913737702, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
-  - {fileID: 3582764931421069414, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
-  - {fileID: 1636338814055742568, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
-  - {fileID: -4911900652228025539, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
-  - {fileID: 6840672224869569419, guid: f3bc5a4dd8d38194880247293873a5dd, type: 3}
+  - {fileID: 2163727140452934955, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
+  - {fileID: 3073554424303893127, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
+  - {fileID: 7613262782077252686, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
+  - {fileID: 7453192555352536725, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
+  - {fileID: -2410847982355180191, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
+  - {fileID: -1956095029352217608, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
+  - {fileID: 4069038346220086621, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
+  - {fileID: -5734343890330669417, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
   FireDelay: 1
   ShotDamage: 10
   BulletPrefab: {fileID: 216608729829562017, guid: af0b1a566279d79499eee993dda90cc0, type: 3}
