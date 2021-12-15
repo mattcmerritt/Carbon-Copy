@@ -17,4 +17,9 @@ public class RoomCountUI : MonoBehaviour
     {
         Text.SetText("Remaining Rooms: " + (RM.TotalRooms - RM.RoomsCleared));
     }
+
+    public int GetRoomsCleared()
+    {
+        return RM.RoomsCleared;
+    }
 }
