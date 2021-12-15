@@ -66,11 +66,11 @@ MonoBehaviour:
   - {fileID: 6191368995883461410, guid: 5d24ece600fbcaa448fa2899ae8aba0c, type: 3}
   - {fileID: 6191368995883461410, guid: 5d24ece600fbcaa448fa2899ae8aba0c, type: 3}
   EnemyPositions:
-  - {x: 7, y: 3.5, z: 0}
-  - {x: 7, y: 2.5, z: 0}
-  - {x: 5, y: -3, z: 0}
-  - {x: 6, y: -2, z: 0}
-  - {x: 7, y: -1, z: 0}
+  - {x: -2.5, y: 4.5, z: 0}
+  - {x: 5.5, y: 6.5, z: 0}
+  - {x: 5.5, y: 9.5, z: 0}
+  - {x: 2.5, y: 0.5, z: 0}
+  - {x: -5.5, y: 2.5, z: 0}
   LoadedEnemies: []
   TurretPrefab: {fileID: 6191368995883461423, guid: 5d24ece600fbcaa448fa2899ae8aba0c, type: 3}
   NumEnemies: 0
@@ -79,9 +79,9 @@ MonoBehaviour:
   - {fileID: 2251070642498628064, guid: f72be64c439013c4d92607374c95c296, type: 3}
   - {fileID: 7104603735817910632, guid: a093da7d510439748a9432f599a0c92f, type: 3}
   CollectiblePositions:
-  - {x: 5, y: -2, z: 0}
-  - {x: -4, y: -3, z: 0}
-  - {x: -7, y: 3, z: 0}
+  - {x: -1.5, y: 1.5, z: 0}
+  - {x: 4.5, y: 4.5, z: 0}
+  - {x: -2.5, y: 10.5, z: 0}
   LoadedCollectibles: []
   PistolPrefab: {fileID: 2251070642498628064, guid: f72be64c439013c4d92607374c95c296, type: 3}
   RiflePrefab: {fileID: 7104603735817910632, guid: a093da7d510439748a9432f599a0c92f, type: 3}
