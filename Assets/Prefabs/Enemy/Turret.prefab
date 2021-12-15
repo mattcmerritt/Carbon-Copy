@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018133e8174d0894d814a78010ff2d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 1
+  Health: 100
   HealthBar: {fileID: 46834804747758874}
   LayersToHit:
   - serializedVersion: 2
