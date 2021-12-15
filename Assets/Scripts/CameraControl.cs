@@ -27,7 +27,7 @@ public class CameraControl : MonoBehaviour
                 Mathf.Clamp(newPosition.x, CurrentRoom.CameraBoundLeft, CurrentRoom.CameraBoundRight),
                 Mathf.Clamp(newPosition.y, CurrentRoom.CameraBoundBottom, CurrentRoom.CameraBoundTop),
                 -10);
-            PreviousPosition = currentPosition;
+            PreviousPosition = transform.position;
         }
         else
         {
