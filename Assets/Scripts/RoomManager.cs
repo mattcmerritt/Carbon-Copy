@@ -21,6 +21,10 @@ public class RoomManager : MonoBehaviour
     private bool LoadingRoom;
     private int LoadingX = -1, LoadingY = -1;
 
+    // win condition
+    public int TotalRooms;
+    public int RoomsCleared;
+
     private void Awake()
     {
         Clones = FindObjectOfType<CloneManager>();
@@ -55,6 +59,9 @@ public class RoomManager : MonoBehaviour
                 room.InitialLoadLevel();
                 room.UnloadLevel();
                 room.gameObject.SetActive(false);
+
+                // count the room
+                TotalRooms++;
             }
         }
     }
@@ -133,7 +140,7 @@ public class RoomManager : MonoBehaviour
 
     private void Update()
     {
-
+        /* Debug: room navigation
         if (Input.GetKeyDown(KeyCode.I))
         {
             Debug.Log("X: " + CurrentRoomX + " \tY: " + CurrentRoomY);
@@ -153,6 +160,32 @@ public class RoomManager : MonoBehaviour
         {
             Debug.Log("X: " + CurrentRoomX + " \tY: " + CurrentRoomY);
             MoveRoom(RIGHT);
+        }
+        */
+
+        // recount rooms cleared
+        RoomsCleared = 0;
+        for (int y = 0; y < RoomTemplates.Length; y++)
+        {
+            for (int x = 0; x < RoomTemplates[y].Length; x++)
+            {
+                Room current = RoomObjects[y][x].GetComponent<Room>();
+                if (current != null && current.IsCleared)
+                {
+                    RoomsCleared++;
+                }
+            }
+        }
+
+        if (RoomsCleared >= TotalRooms)
+        {
+            GameUI ui = FindObjectOfType<GameUI>();
+            ui.ShowWin();
+        }
+        else if (Clones.GetClones().Count <= 0)
+        {
+            GameUI ui = FindObjectOfType<GameUI>();
+            ui.ShowLoss();
         }
     }
 

@@ -28,6 +28,7 @@ public class Room : MonoBehaviour
     // room manager
     private RoomManager RM;
     private bool NeedsUpdate = false;
+    public bool IsCleared;
 
     // camera controls
     public bool IsLarge;
@@ -184,6 +185,8 @@ public class Room : MonoBehaviour
 
         CompositeCollider2D collider = Doors.GetComponent<CompositeCollider2D>();
         collider.isTrigger = true;
+
+        IsCleared = true;
     }
 
     public void RemoveCollected(GameObject obj)
