@@ -39,13 +39,22 @@ public class CloneMovement : MonoBehaviour
         }
         else
         {
-            rb.MovePosition(LoadedPosition);
+            //rb.MovePosition(LoadedPosition);
+            transform.position = LoadedPosition;
             IsLoadingRoom = false;
+
+            // reenable collider after moving
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.enabled = true;
         }
     }
 
     public void MoveToPosition(Vector2 position)
     {
+        // disable collider temporarily to prevent collisions
+        Collider2D collider = GetComponent<Collider2D>();
+        collider.enabled = false;
+
         LoadedPosition = position;
         IsLoadingRoom = true;
     }

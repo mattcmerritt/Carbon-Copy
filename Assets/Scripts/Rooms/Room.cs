@@ -16,7 +16,7 @@ public class Room : MonoBehaviour
     public List<GameObject> Collectibles;
     public List<Vector3> CollectiblePositions;
     public List<GameObject> LoadedCollectibles;
-    public GameObject PistolPrefab, RiflePrefab, HealthPickupPrefab;
+    public GameObject PistolPrefab, RiflePrefab, HealthPickupPrefab, ClonePodPrefab;
 
     // clone spawn locations
     public List<Vector2> Spawns; // first 4 are bottom, then top, left, right
@@ -28,6 +28,7 @@ public class Room : MonoBehaviour
     // room manager
     private RoomManager RM;
     private bool NeedsUpdate = false;
+    public bool IsCleared;
 
     // camera controls
     public bool IsLarge;
@@ -70,6 +71,10 @@ public class Room : MonoBehaviour
             else if (Collectibles[i] == HealthPickupPrefab)
             {
                 item = Instantiate(HealthPickupPrefab, CollectiblePositions[i], Quaternion.identity);
+            }
+            else if (Collectibles[i] == ClonePodPrefab)
+            {
+                item = Instantiate(ClonePodPrefab, CollectiblePositions[i], Quaternion.identity);
             }
             LoadedCollectibles.Add(item);
         }
@@ -180,6 +185,8 @@ public class Room : MonoBehaviour
 
         CompositeCollider2D collider = Doors.GetComponent<CompositeCollider2D>();
         collider.isTrigger = true;
+
+        IsCleared = true;
     }
 
     public void RemoveCollected(GameObject obj)

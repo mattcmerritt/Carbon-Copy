@@ -19,6 +19,10 @@ public class Enemy : MonoBehaviour
 
     private bool NeedsRemoval = false;
 
+    public LayerMask[] LayersToHit;
+    public int LayerToHit;
+    public LayerMask EnemyLayer;
+
     protected virtual void Awake()
     {
         Clones = FindObjectOfType<CloneManager>();
@@ -29,6 +33,11 @@ public class Enemy : MonoBehaviour
         CurrentAnchor = EndAnchor;
 
         MaxHealth = Health;
+
+        foreach (LayerMask l in LayersToHit)
+        {
+            LayerToHit += l.value;
+        }
     }
 
     protected virtual void Update()
@@ -45,8 +54,13 @@ public class Enemy : MonoBehaviour
             float currentDistance = Vector3.Distance(Clones.GetClones()[i].transform.position, transform.position);
             if (currentDistance < minDistance)
             {
-                minDistance = currentDistance;
-                selectedClone = Clones.GetClones()[i];
+                // check that there are not walls in the way
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, (Clones.GetClones()[i].transform.position - transform.position).normalized, Mathf.Infinity, LayerToHit);
+                if (hit.rigidbody == Clones.GetClones()[i].GetComponent<Rigidbody2D>())
+                {
+                    minDistance = currentDistance;
+                    selectedClone = Clones.GetClones()[i];
+                }
             }
         }
 

@@ -19,7 +19,7 @@ public class CloneBehavior : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetMouseButton(0))
         {
             if (CurrentWeapon != null)
             {

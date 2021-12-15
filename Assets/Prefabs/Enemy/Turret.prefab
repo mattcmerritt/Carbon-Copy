@@ -310,8 +310,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018133e8174d0894d814a78010ff2d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  Health: 1
   HealthBar: {fileID: 46834804747758874}
+  LayersToHit:
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 64
+  LayerToHit: 0
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
   ShotDirection: {x: 0, y: 0}
   TurretSprites:
   - {fileID: 2163727140452934955, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
