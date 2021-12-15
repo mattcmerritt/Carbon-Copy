@@ -13,19 +13,25 @@ public class RoomManager : MonoBehaviour
     public GameObject[][] RoomTemplates;
     public GameObject[][] RoomObjects;
 
-    public GameObject StartRoom, Room1, Room2;
+    public GameObject[] RoomPrefabs;
 
     public int CurrentRoomX, CurrentRoomY;
     public int PreviousDirection;
 
     private bool LoadingRoom;
+    private int LoadingX = -1, LoadingY = -1;
 
     private void Awake()
     {
         Clones = FindObjectOfType<CloneManager>();
 
         // array is currently upside-down
-        RoomTemplates = new GameObject[][] { new GameObject[] {StartRoom, Room1}, new GameObject[] {Room2, Room1} };
+        RoomTemplates = new GameObject[][] { 
+            new GameObject[] { RoomPrefabs[7], RoomPrefabs[0], RoomPrefabs[1], }, 
+            new GameObject[] { RoomPrefabs[5], RoomPrefabs[3], RoomPrefabs[8], },
+            new GameObject[] { RoomPrefabs[3], RoomPrefabs[4], RoomPrefabs[5], },
+            new GameObject[] { RoomPrefabs[2], RoomPrefabs[1], RoomPrefabs[6], },
+        };
         RoomObjects = new GameObject[RoomTemplates.Length][];
         
         for (int row = 0; row < RoomObjects.Length; row++)
@@ -59,8 +65,6 @@ public class RoomManager : MonoBehaviour
         room.SetActive(true);
         LoadedRoom = room.GetComponent<Room>();
         LoadedRoom.LoadLevel(Clones.GetClones().ToArray(), PreviousDirection);
-
-        LoadingRoom = false;
     }
 
     private void UnloadPrevious(int x, int y)
@@ -73,12 +77,12 @@ public class RoomManager : MonoBehaviour
 
     public void MoveRoom(int direction)
     {
-        Debug.Log("Loading " + LoadingRoom);
+        //Debug.Log("Loading " + LoadingRoom);
         if (!LoadingRoom)
         {
             int prevX = CurrentRoomX, prevY = CurrentRoomY;
 
-            Debug.Log(direction);
+            //Debug.Log(direction);
             if (direction == DOWN)
             {
                 CurrentRoomY--;
@@ -101,7 +105,7 @@ public class RoomManager : MonoBehaviour
             }
 
             // check bounds
-            Debug.Log("X: " + CurrentRoomX + " Y: " + CurrentRoomY);
+            //Debug.Log("X: " + CurrentRoomX + " Y: " + CurrentRoomY);
             if (CurrentRoomY >= RoomObjects.Length || CurrentRoomY < 0)
             {
                 CurrentRoomY = prevY;
@@ -120,8 +124,42 @@ public class RoomManager : MonoBehaviour
 
                 // load current
                 LoadingRoom = true;
+                LoadingX = prevX;
+                LoadingY = prevY;
                 LoadCurrentRoom();
             }
         }
+    }
+
+    private void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log("X: " + CurrentRoomX + " \tY: " + CurrentRoomY);
+            MoveRoom(UP);
+        }
+        else if (Input.GetKeyDown(KeyCode.J))
+        {
+            Debug.Log("X: " + CurrentRoomX + " \tY: " + CurrentRoomY);
+            MoveRoom(LEFT);
+        }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log("X: " + CurrentRoomX + " \tY: " + CurrentRoomY);
+            MoveRoom(DOWN);
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("X: " + CurrentRoomX + " \tY: " + CurrentRoomY);
+            MoveRoom(RIGHT);
+        }
+    }
+
+    public void FinishLoading()
+    {
+        LoadingRoom = false;
+        LoadingX = -1;
+        LoadingY = -1;
     }
 }

@@ -40,12 +40,18 @@ public class CloneBehavior : MonoBehaviour
         {
             weapon.SetClone(gameObject);
             CurrentWeapon = weapon;
+
+            Room currentRoom = FindObjectOfType<Room>();
+            currentRoom.RemoveCollected(CurrentWeapon.gameObject);
         }
         else if (weapon != null && CurrentWeapon != null)
         {
             CurrentWeapon.Drop();
             weapon.SetClone(gameObject);
             CurrentWeapon = weapon;
+
+            Room currentRoom = FindObjectOfType<Room>();
+            currentRoom.RemoveCollected(CurrentWeapon.gameObject);
         }
 
         // reset weapon cooldown
@@ -120,5 +126,15 @@ public class CloneBehavior : MonoBehaviour
     public bool CanGrabWeapon()
     {
         return WeaponSwapCooldown > 0.5f;
+    }
+
+    public Weapon GetWeapon()
+    {
+        return CurrentWeapon;
+    }
+
+    public void AddHealth(int added)
+    {
+        Health += added;
     }
 }

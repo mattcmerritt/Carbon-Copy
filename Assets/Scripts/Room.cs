@@ -8,15 +8,15 @@ public class Room : MonoBehaviour
     // enemy data
     public List<Enemy> Enemies;
     public List<Vector3> EnemyPositions;
-    public GameObject[] LoadedEnemies;
+    public List<GameObject> LoadedEnemies;
     public GameObject TurretPrefab;
     public int NumEnemies;
 
     // item data
     public List<GameObject> Collectibles;
     public List<Vector3> CollectiblePositions;
-    public GameObject[] LoadedCollectibles;
-    public GameObject PistolPrefab, RiflePrefab;
+    public List<GameObject> LoadedCollectibles;
+    public GameObject PistolPrefab, RiflePrefab, HealthPickupPrefab;
 
     // clone spawn locations
     public List<Vector2> Spawns; // first 4 are bottom, then top, left, right
@@ -25,10 +25,23 @@ public class Room : MonoBehaviour
     public GameObject Doors;
     public TileBase ClosedDoor, OpenDoor;
 
+    // room manager
+    private RoomManager RM;
+    private bool NeedsUpdate = false;
+
+    // camera controls
+    public bool IsLarge;
+    public float CameraBoundRight, CameraBoundBottom, CameraBoundLeft, CameraBoundTop;
+
+    private void Awake()
+    {
+        RM = FindObjectOfType<RoomManager>();
+    }
+
     public void InitialLoadLevel()
     {
         // loading enemies
-        LoadedEnemies = new GameObject[Enemies.Count];
+        LoadedEnemies = new List<GameObject>();
         NumEnemies = Enemies.Count;
         for (int i = 0; i < Enemies.Count; i++)
         {
@@ -37,12 +50,12 @@ public class Room : MonoBehaviour
             {
                 currentEnemy = Instantiate(TurretPrefab, EnemyPositions[i], Quaternion.identity);
             }
-            LoadedEnemies[i] = currentEnemy;
+            LoadedEnemies.Add(currentEnemy);
             // other checks for other types of enemies
         }
 
         // loading collectibles
-        LoadedCollectibles = new GameObject[Collectibles.Count];
+        LoadedCollectibles = new List<GameObject>();
         for (int i = 0; i < Collectibles.Count; i++)
         {
             GameObject item = null;
@@ -54,14 +67,18 @@ public class Room : MonoBehaviour
             {
                 item = Instantiate(RiflePrefab, CollectiblePositions[i], Quaternion.identity);
             }
-            LoadedCollectibles[i] = item;
+            else if (Collectibles[i] == HealthPickupPrefab)
+            {
+                item = Instantiate(HealthPickupPrefab, CollectiblePositions[i], Quaternion.identity);
+            }
+            LoadedCollectibles.Add(item);
         }
     }
 
     public void LoadLevel(GameObject[] clones, int direction)
     {
         // loading enemies
-        for (int i = 0; i < LoadedEnemies.Length; i++)
+        for (int i = 0; i < LoadedEnemies.Count; i++)
         {
             if (LoadedEnemies[i] != null)
             {
@@ -70,7 +87,7 @@ public class Room : MonoBehaviour
         }
 
         // loading collectibles
-        for (int i = 0; i < LoadedCollectibles.Length; i++)
+        for (int i = 0; i < LoadedCollectibles.Count; i++)
         {
             if (LoadedCollectibles[i] != null)
             {
@@ -84,12 +101,14 @@ public class Room : MonoBehaviour
             CloneMovement currentClone = clones[i].GetComponent<CloneMovement>();
             currentClone.MoveToPosition(Spawns[i + (direction * 4)]);
         }
+
+        NeedsUpdate = true;
     }
 
     public void UnloadLevel()
     {
         // removing enemies
-        for (int i = 0; i < LoadedEnemies.Length; i++)
+        for (int i = 0; i < LoadedEnemies.Count; i++)
         {
             if (LoadedEnemies[i] != null)
             {
@@ -98,7 +117,7 @@ public class Room : MonoBehaviour
         }
 
         // removing collectibles
-        for (int i = 0; i < LoadedCollectibles.Length; i++)
+        for (int i = 0; i < LoadedCollectibles.Count; i++)
         {
             if (LoadedCollectibles[i] != null)
             {
@@ -116,7 +135,7 @@ public class Room : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < LoadedEnemies.Length; i++)
+        for (int i = 0; i < LoadedEnemies.Count; i++)
         {
             GameObject obj = LoadedEnemies[i];
 
@@ -145,6 +164,15 @@ public class Room : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (NeedsUpdate)
+        {
+            RM.FinishLoading();
+            NeedsUpdate = false;
+        }
+    }
+
     private void OpenDoors()
     {
         Tilemap tiles = Doors.GetComponent<Tilemap>();
@@ -152,5 +180,18 @@ public class Room : MonoBehaviour
 
         CompositeCollider2D collider = Doors.GetComponent<CompositeCollider2D>();
         collider.isTrigger = true;
+    }
+
+    public void RemoveCollected(GameObject obj)
+    {
+        LoadedCollectibles.Remove(obj);
+    }
+
+    public void AddDroppedCollectible(GameObject obj)
+    {
+        if (!LoadedCollectibles.Contains(obj))
+        {
+            LoadedCollectibles.Add(obj);
+        }   
     }
 }
