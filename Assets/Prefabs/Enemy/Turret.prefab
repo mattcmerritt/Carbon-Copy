@@ -312,6 +312,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   HealthBar: {fileID: 46834804747758874}
+  LayersToHit:
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 64
+  LayerToHit: 0
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
   ShotDirection: {x: 0, y: 0}
   TurretSprites:
   - {fileID: 2163727140452934955, guid: d59333dbfa12545cfbcb79a714f11d5f, type: 3}
