@@ -14,6 +14,7 @@ public class Collectible : MonoBehaviour
             {
                 Weapon weapon = GetComponent<Weapon>();
                 HealthPickup health = GetComponent<HealthPickup>();
+                ClonePod pod = GetComponent<ClonePod>();
 
                 if (weapon != null)
                 {
@@ -51,6 +52,16 @@ public class Collectible : MonoBehaviour
                     health.Collect();
                     health.RemoveFromRoom();
                     Destroy(gameObject);
+                }
+                else if (pod != null)
+                {
+                    if (pod.CanCollect())
+                    {
+                        // clone pod stuff
+                        pod.Collect();
+                        pod.RemoveFromRoom();
+                        Destroy(gameObject);
+                    }
                 }
             }
         }

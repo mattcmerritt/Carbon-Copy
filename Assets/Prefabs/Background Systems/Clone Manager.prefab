@@ -43,3 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fa7468cb96c0e749b1b158eed89dc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clones: []
+  ClonePrefabs:
+  - {fileID: 4559456853120870610, guid: 6496e897b42edf44098e06d42e9a25fb, type: 3}
+  - {fileID: 9107738785937904879, guid: fe0a2bf1838244f46b1d56f00adc1372, type: 3}
+  - {fileID: 2920084496588925773, guid: 956608a26fb0941db9db6ca3ac5e318a, type: 3}
+  - {fileID: 7863877991223348681, guid: 3626258f7f8544e9ea665037c9468a19, type: 3}
